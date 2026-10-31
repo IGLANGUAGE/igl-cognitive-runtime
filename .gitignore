@@ -1,1 +1,31 @@
-1
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.so
+mock_out.json
+.pytest_cache/
+*.tar.gz
+
+# Nuitka
+*.build/
+*.dist/
+*.onefile-build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local
+*.local
+*.log
+data/

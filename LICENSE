@@ -1,0 +1,16 @@
+cat > LICENSE << 'EOF'
+IGL Cognitive Runtime Community License v0.1
+
+Copyright (c) 2026 Igor Gnezdilov. Contact: igor.gnezdilov1@gmail.com
+
+Free for non-commercial use (personal, research, education).
+Commercial use requires a separate written license from the author.
+
+You MAY NOT:
+- redistribute the server binary or any part of it
+- reverse engineer the binary
+- remove this license notice
+- sublicense this software under different terms
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+EOF
