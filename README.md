@@ -40,7 +40,9 @@ The frame selection is:
 - **ExecutionRequestBuilder** — builds a minimal `ExecutionRequest`
   (system_prompt, user_prompt, model_id, temperature, max_tokens).
   No memory_context, no withheld, no constraints.
-- **ExecutionAdapter** — OpenAI-compatible adapter (aitunnel, OpenAI, local).
+- - **ExecutionAdapter** — OpenAI-compatible adapter.
+  Works with any OpenAI-compatible endpoint (OpenAI, OpenRouter, Groq,
+  Together AI, local Ollama, and others). See "LLM backends" below.
   Receives only `ExecutionRequest`.
 - **ResponseGate** — deterministic checks only.
   `PASS` means "all configured checks passed", **not** "factually true".
@@ -53,8 +55,7 @@ The frame selection is:
 - Not a memory store. IGL Memory is a separate system.
 - Not a replacement for IGL Memory.
 - Not a claim of consciousness.
-- **Executing LLM is not connected yet.**
-  The Engine selects a frame; what happens inside that frame is out of scope for CE.1–CE.2.
+- Not a fact-checker. ResponseGate does not verify semantic correctness.
 
 ## Status
 
@@ -70,7 +71,7 @@ The frame selection is:
 | CE.4.2 | Frame-driven execution builder + mock adapter |
 | CE.4.3 | Deterministic response gate (NOT_VERIFIED) |
 | CE.4.4/4.5 | CognitiveAgent full cycle, MODEL_UNAVAILABLE, memory disclosure protection |
-| CE.4.6 | OpenAI-compatible adapter (aitunnel/OpenAI/local) |
+| CE.4.6 | OpenAI-compatible adapter (any endpoint) |
 | CE.5 | CLI: `igl-cognitive respond` (mock + live) |
 
 Tests: **147 unit passed, 10 live passed** (requires a running IGL server
@@ -79,14 +80,34 @@ and `IGL_USER_TOKEN_A` / `IGL_USER_TOKEN_B`).
 See `CONTRACT.md` for the full contract and `RESULTS.md` for what was
 and was not demonstrated.
 
+## LLM backends
+
+Any OpenAI-compatible endpoint works. Set `OPENAI_API_KEY` and `OPENAI_BASE_URL`.
+
+| Backend | Base URL | Notes |
+|---|---|---|
+| OpenAI | `https://api.openai.com/v1` | Standard models |
+| OpenRouter | `https://openrouter.ai/api/v1` | Many models, one key |
+| Groq | `https://api.groq.com/openai/v1` | Fast inference |
+| Together AI | `https://api.together.xyz/v1` | Open models |
+| Ollama (local) | `http://localhost:11434/v1` | Free, offline, no key |
+| aitunnel | `https://api.aitunnel.ru/v1` | RU-region provider |
+
+For local testing without any API key:
+
+```bash
+export OPENAI_BASE_URL=http://localhost:11434/v1
+export OPENAI_API_KEY=ollama
+./igl-cognitive respond --text "prove mathematically that 2+2=4" --json --model llama3
+```
+
 ## CLI
 
 ```bash
-igl-cognitive respond --text "докажи математически" --mock --json
-igl-cognitive respond --text "..." --json \
-  --api-key $OPENAI_API_KEY \
-  --base-url https://api.aitunnel.ru/v1 \
-  --model gpt-5.6-luna
+# Any OpenAI-compatible endpoint
+export OPENAI_API_KEY=...
+export OPENAI_BASE_URL=https://api.openai.com/v1   # or OpenRouter, Groq, Ollama, etc.
+igl-cognitive respond --text "..." --json --model <model-id>
 ```
 
 ## Limitations
@@ -139,4 +160,6 @@ pytest -q -m live
 
 ## License
 
-Private. See LICENSE. Non-commercial use only until a public build is released.
+IGL Cognitive Runtime Community License. Free for non-commercial use
+(personal, research, education). Commercial use requires a separate
+written license. See LICENSE.
