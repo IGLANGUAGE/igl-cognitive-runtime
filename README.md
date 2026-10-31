@@ -117,6 +117,11 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
+## Download
+
+Download the Linux x86-64 binary from
+[GitHub Releases](https://github.com/IGLANGUAGE/igl-cognitive-runtime/releases).
+
 ## Run tests
 
 Unit only (no server):
