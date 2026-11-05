@@ -143,6 +143,13 @@ pip install -e ".[dev]"
 Download the Linux x86-64 binary from
 [GitHub Releases](https://github.com/IGLANGUAGE/igl-cognitive-runtime/releases).
 
+## Download
+
+| Platform | Build | Includes |
+|---|---|---|
+| Linux x86-64   | minimal v0.2.0 | Engine, Execution, CLI, Trace store                       
+| Windows x86-64 | full  v0.2.0   | Engine, Execution, CLI, Trace store, **Battery**, **MCP** |
+
 ## Run tests
 
 Unit only (no server):
